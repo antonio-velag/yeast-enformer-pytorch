@@ -5,7 +5,7 @@ class EnformerConfig(PretrainedConfig):
 
     def __init__(
         self,
-        dim = 1536,
+        dim = 299,
         depth = 11,
         heads = 8,
         output_heads = dict(human = 5313, mouse= 1643),
