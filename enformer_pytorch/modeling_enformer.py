@@ -211,6 +211,11 @@ class TargetLengthCrop(nn.Module):
 
         return x[:, -trim:trim]
 
+#Empty layer to replace TargetLengthCrop   
+class NoOpLayer(nn.Module):
+    def forward(self, x):
+        return x
+
 def ConvBlock(dim, dim_out = None, kernel_size = 1, is_distributed = None):
     batchnorm_klass = MaybeSyncBatchnorm(is_distributed = is_distributed)
 
@@ -370,8 +375,11 @@ class Enformer(PreTrainedModel):
 
         # target cropping
 
-        self.target_length = config.target_length
-        self.crop_final = TargetLengthCrop(config.target_length)
+        #self.target_length = config.target_length
+        #self.crop_final = TargetLengthCrop(config.target_length)
+
+        #replacing TargetLengthCrop for empty layer
+        self.crop_final = NoOpLayer()
 
         # final pointwise
 
